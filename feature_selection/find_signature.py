@@ -8,10 +8,10 @@ numpy.random.seed(42)
 ### The words (features) and authors (labels), already largely processed.
 ### These files should have been created from the previous (Lesson 10)
 ### mini-project.
-words_file = "/content/drive/MyDrive/git_projects/ud120-projects/text_learning/your_word_data.pkl" 
-authors_file = "/content/drive/MyDrive/git_projects/ud120-projects/text_learning/your_word_data.pkl"
-word_data = joblib.load( open(words_file, "r"))
-authors = joblib.load( open(authors_file, "r") )
+words_file = "/content/your_word_data.pkl" 
+authors_file = "/content/your_word_data.pkl"
+word_data = joblib.load( open(words_file, "rb"))
+authors = joblib.load( open(authors_file, "rb") )
 
 
 
@@ -40,4 +40,12 @@ labels_train   = labels_train[:150]
 from sklearn.tree import DecisionTreeClassifier
 clf = DecisionTreeClassifier()
 clf.fit(features_train,labels_train)
+##print(f'Accuracy on training test: {clf.score(features_train,labels_train)}')
 print(f'Accuracy: {clf.score(features_test,labels_test)}')
+features_names = vectorizer.get_feature_names_out()
+for i in range(len(clf.feature_importances_)):
+    importance = clf.feature_importances_[i]
+    if importance > 0.2:
+      print(f'Feature {i} ({features_names[i]}) importance: {importance}')
+
+
